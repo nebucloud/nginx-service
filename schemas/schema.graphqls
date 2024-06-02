@@ -1,0 +1,52 @@
+# Federation directive to specify primary keys for entity resolution
+type NginxConfig @key(fields: "id") {
+    id: ID!
+    serverName: String
+    listenPort: Int
+    serverTokens: Boolean
+    locations: [Location]
+}
+
+# Define location blocks within NGINX configurations
+type Location {
+    path: String
+    proxyPass: String
+}
+
+# Input types for creating and updating NGINX configurations
+input NginxConfigInput {
+    serverName: String
+    listenPort: Int
+    serverTokens: Boolean
+    locations: [LocationInput]
+}
+
+input LocationInput {
+    path: String
+    proxyPass: String
+}
+
+type Mutation {
+  _empty: String
+}
+
+# Extend the Query type to include queries for fetching NGINX configurations
+extend type Query {
+    # Fetch a specific NGINX configuration by ID
+    nginxConfig(id: ID!): NginxConfig
+
+    # Fetch all NGINX configurations
+    listNginxConfigs: [NginxConfig]
+}
+
+# Extend the Mutation type to include mutations for updating NGINX configurations
+extend type Mutation {
+    # Update an existing NGINX configuration
+    updateNginxConfig(id: ID!, config: NginxConfigInput!): NginxConfig
+
+    # Add a new NGINX configuration
+    addNginxConfig(config: NginxConfigInput!): NginxConfig
+
+    # Delete an existing NGINX configuration
+    deleteNginxConfig(id: ID!): ID
+}

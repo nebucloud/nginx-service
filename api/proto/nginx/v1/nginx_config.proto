@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package nginxconfig;
+
+option go_package = "github.com/nebucloud/nginx-service/api/proto/nginx";
+
+service NginxConfigService {
+    rpc ApplyConfig (ConfigRequest) returns (ConfigResponse);
+    rpc GetConfig (ConfigRequest) returns (ConfigResponse);
+}
+
+message ConfigRequest {
+    string config_id = 1;
+    string config_data = 2;
+}
+
+message ConfigResponse {
+    bool success = 1;
+    string message = 2;
+    string config_data = 3;
+}
