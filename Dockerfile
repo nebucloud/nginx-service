@@ -13,7 +13,7 @@ RUN go mod download
 # Copy the rest of the application code
 COPY . .
 
-# Build the project. Replace pkg/nginx_service with the directory containing the main file
+# Build the project.
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o nginx-service .
 
 # Use ChainGuard's glibc-dynamic image for the runtime environment
